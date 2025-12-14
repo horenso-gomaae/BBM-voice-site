@@ -15,11 +15,11 @@
             /* 背景色と画面全体の基本設定 */
             background-color: #000; 
             display: flex;
-            flex-direction: column; /* 要素を縦に並べる */
-            justify-content: center; /* 垂直方向の中央揃え */
-            align-items: center;    /* 水平方向の中央揃え */
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center;    
             
-            min-height: 100vh;      /* 画面の高さいっぱいを対象にする */
+            min-height: 100vh;      
             margin: 0;
             font-family: Arial, sans-serif;
             color: white;
@@ -49,17 +49,19 @@
             /* 縦長画像のアスペクト比を固定し、見切れを防止 */
             width: 400px;
             height: auto; 
-            aspect-ratio: 1 / 1.4; /* 縦横比を1:1.4に設定 */
+            aspect-ratio: 1 / 1.4; 
             
             background-image: url('bg_image.jpg');
-            background-size: contain; /* 画像全体をエリア内に収める */
+            background-size: contain; 
             background-repeat: no-repeat; 
             background-position: center; 
             
-            /* 装飾と操作性 */
-            border: 5px solid #fff; 
-            border-radius: 10px; 
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.7); 
+            /* ******** 修正点: 枠と影を削除 ********** */
+            border: none;         /* 枠を削除 */
+            border-radius: 10px;  /* 角丸を維持 (見た目には影響しないが、念のため) */
+            box-shadow: none;     /* 影を削除 */
+            /* ************************************** */
+            
             cursor: pointer; 
             transition: transform 0.1s ease-in-out; 
 
@@ -76,7 +78,7 @@
         /* スマホ対応 */
         @media (max-width: 650px) {
             #audio-button {
-                width: 70vw; /* 画面幅の70%を使用 */
+                width: 70vw; 
                 height: auto;
                 aspect-ratio: 1 / 1.4;
             }
@@ -111,4 +113,21 @@
             const plugAudio = document.getElementById('plug-audio');
 
             audioButton.addEventListener('click', () => {
-                // 1. 再生前に時間を最初 (0
+                // 1. 再生前に時間を最初 (0秒) に戻す
+                plugAudio.currentTime = 0; 
+
+                // 2. 音声の再生を試みる
+                plugAudio.play()
+                    .then(() => {
+                        console.log('音声が再生されました。');
+                    })
+                    .catch(error => {
+                        console.error('音声の再生に失敗しました:', error);
+                        // 再生に失敗した場合、ファイル名やパスに問題がある可能性が高いです
+                        alert('再生できませんでした。音声ファイル(plug.mp3)が正しく配置されているか確認してください。');
+                    });
+            });
+        });
+    </script>
+</body>
+</html>
