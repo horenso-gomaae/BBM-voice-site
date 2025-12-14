@@ -12,11 +12,11 @@
         ========================================
         */
         body {
-            /* 画面全体の中央配置設定 */
+            /* (省略：bodyのCSSはそのまま) */
             display: flex;
-            flex-direction: column; /* テキストとボタンを縦に並べるため */
-            justify-content: center; /* 垂直方向の中央 */
-            align-items: center;    /* 水平方向の中央 */
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center;    
             min-height: 100vh;      
             margin: 0;
             background-color: #000;
@@ -25,53 +25,53 @@
             text-align: center;
         }
 
-        /* 1. テキスト表示エリアのスタイル */
+        /* 1. テキスト表示エリアのスタイル (省略) */
         .header-text {
             margin-bottom: 20px;
             text-shadow: 2px 2px 4px #000000;
         }
 
         .header-text h1 {
-            font-size: 3.5em; /* Do you love plug */
+            font-size: 3.5em; 
             margin: 0;
             text-transform: uppercase;
             letter-spacing: 2px;
         }
 
         .header-text p {
-            font-size: 2.5em; /* ↓ */
+            font-size: 2.5em; 
             margin: 0.5em 0 0;
         }
 
         /* 2. 画像ボタンエリアのスタイル */
         #audio-button {
+            /* 幅と高さはそのまま */
             width: 600px;
             height: 400px;
             
             /* 背景画像を適用 (bg_image.jpg を参照) */
             background-image: url('bg_image.jpg');
-            background-size: cover; 
-            background-position: center;
             
-            /* 装飾と操作性の向上 */
+            /* ******** ここを修正しました ********** */
+            background-size: contain; 
+            background-repeat: no-repeat; /* 繰り返し表示を防止 */
+            /* ************************************** */
+            
+            background-position: center; /* 画像を中央に配置 */
+            
+            /* (省略：装飾とFlex設定はそのまま) */
             border: 5px solid #fff; 
             border-radius: 10px; 
             box-shadow: 0 0 30px rgba(255, 255, 255, 0.7); 
-            cursor: pointer; /* マウスオーバー時に指のアイコンを表示 */
-            transition: transform 0.1s ease-in-out; /* クリック時のアニメーション用 */
+            cursor: pointer; 
+            transition: transform 0.1s ease-in-out; 
 
-            /* 画像上にテキストを表示しないため、子要素を非表示化 (今回はテキストを画像上から移動させたため不要だが、念のため) */
             display: flex; 
             justify-content: center;
             align-items: center;
         }
 
-        /* クリック時にボタンが少し縮むアニメーション */
-        #audio-button:active {
-            transform: scale(0.98); 
-        }
-
-        /* スマホ対応（PCメインだが、念のため） */
+        /* (省略：:activeと@mediaのスタイルはそのまま) */
         @media (max-width: 650px) {
             #audio-button {
                 width: 90vw; 
@@ -93,32 +93,24 @@
     </div>
 
     <div id="audio-button">
-        </div>
+    </div>
 
     <audio id="plug-audio" src="plug.mp3" preload="auto"></audio>
     
     <script>
-        /*
-        ========================================
-        JavaScript (音声再生ロジック)
-        ========================================
-        */
         document.addEventListener('DOMContentLoaded', () => {
             const audioButton = document.getElementById('audio-button');
             const plugAudio = document.getElementById('plug-audio');
 
             audioButton.addEventListener('click', () => {
-                // 1. 再生前に時間を最初 (0秒) に戻す
                 plugAudio.currentTime = 0; 
 
-                // 2. 音声の再生を試みる
                 plugAudio.play()
                     .then(() => {
                         console.log('音声が再生されました。');
                     })
                     .catch(error => {
                         console.error('音声の再生に失敗しました:', error);
-                        // ユーザーの利便性を考え、エラーメッセージは簡潔に
                         alert('再生できませんでした。ブラウザの設定をご確認ください。');
                     });
             });
