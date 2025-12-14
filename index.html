@@ -14,39 +14,56 @@
         body {
             /* 画面全体の中央配置設定 */
             display: flex;
-            justify-content: center; /* 水平方向の中央 */
-            align-items: center;    /* 垂直方向の中央 */
-            min-height: 100vh;      /* 画面の高さいっぱい */
+            flex-direction: column; /* テキストとボタンを縦に並べるため */
+            justify-content: center; /* 垂直方向の中央 */
+            align-items: center;    /* 水平方向の中央 */
+            min-height: 100vh;      
             margin: 0;
-            background-color: #000; /* 背景色: 黒 */
+            background-color: #000;
             font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
         }
 
+        /* 1. テキスト表示エリアのスタイル */
+        .header-text {
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px #000000;
+        }
+
+        .header-text h1 {
+            font-size: 3.5em; /* Do you love plug */
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .header-text p {
+            font-size: 2.5em; /* ↓ */
+            margin: 0.5em 0 0;
+        }
+
+        /* 2. 画像ボタンエリアのスタイル */
         #audio-button {
-            /* ボタンエリアのサイズ (PC向け) */
             width: 600px;
             height: 400px;
             
-            /* 背景画像を適用 (用意した bg_image.jpg を参照) */
+            /* 背景画像を適用 (bg_image.jpg を参照) */
             background-image: url('bg_image.jpg');
-            background-size: cover; /* 画像をエリア全体に広げる */
+            background-size: cover; 
             background-position: center;
             
             /* 装飾と操作性の向上 */
             border: 5px solid #fff; 
-            border-radius: 10px; /* 角を丸く */
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.7); /* 白い光沢 */
+            border-radius: 10px; 
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.7); 
             cursor: pointer; /* マウスオーバー時に指のアイコンを表示 */
             transition: transform 0.1s ease-in-out; /* クリック時のアニメーション用 */
 
-            /* テキストを中央に配置するためのFlex設定 */
-            display: flex;
-            flex-direction: column;
+            /* 画像上にテキストを表示しないため、子要素を非表示化 (今回はテキストを画像上から移動させたため不要だが、念のため) */
+            display: flex; 
             justify-content: center;
             align-items: center;
-            
-            /* テキストのデフォルト色 */
-            color: white; 
         }
 
         /* クリック時にボタンが少し縮むアニメーション */
@@ -54,47 +71,29 @@
             transform: scale(0.98); 
         }
 
-        .text-overlay {
-            text-align: center;
-            padding: 20px;
-            background-color: rgba(0, 0, 0, 0.4); /* テキストの背景に半透明の黒を敷き、視認性アップ */
-            border-radius: 5px;
-        }
-
-        .text-overlay h1 {
-            font-size: 3.5em; /* Do you love plug */
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .text-overlay p {
-            font-size: 2.5em; /* ↓ */
-            margin: 0.5em 0 0;
-        }
-        
-        /* 画面が小さい時（スマホ対応）の調整 */
+        /* スマホ対応（PCメインだが、念のため） */
         @media (max-width: 650px) {
             #audio-button {
-                width: 90vw; /* 画面幅の90% */
+                width: 90vw; 
                 height: 60vw;
             }
-            .text-overlay h1 {
+            .header-text h1 {
                 font-size: 2em;
             }
-            .text-overlay p {
+            .header-text p {
                 font-size: 1.5em;
             }
         }
     </style>
 </head>
 <body>
-    <div id="audio-button">
-        <div class="text-overlay">
-            <h1>Do you love plug</h1>
-            <p>↓</p>
-        </div>
+    <div class="header-text">
+        <h1>Do you love plug</h1>
+        <p>↓</p>
     </div>
+
+    <div id="audio-button">
+        </div>
 
     <audio id="plug-audio" src="plug.mp3" preload="auto"></audio>
     
@@ -115,14 +114,12 @@
                 // 2. 音声の再生を試みる
                 plugAudio.play()
                     .then(() => {
-                        // 再生成功時の処理 (コンソールにログを出す程度)
                         console.log('音声が再生されました。');
                     })
                     .catch(error => {
-                        // ブラウザによる自動再生ブロック時のエラー処理
-                        // 多くのモダンブラウザは、ユーザー操作がないと音声を再生しません。
                         console.error('音声の再生に失敗しました:', error);
-                        alert('音声再生がブロックされました。ブラウザの設定で、このサイトのメディア自動再生を許可してください。');
+                        // ユーザーの利便性を考え、エラーメッセージは簡潔に
+                        alert('再生できませんでした。ブラウザの設定をご確認ください。');
                     });
             });
         });
