@@ -5,86 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Do you love plug</title>
     
-    <style>
-        /*
-        ========================================
-        CSS (デザインと中央配置)
-        ========================================
-        */
-        body {
-            /* (省略：bodyのCSSはそのまま) */
-            display: flex;
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center;    
-            min-height: 100vh;      
-            margin: 0;
-            background-color: #000;
-            font-family: Arial, sans-serif;
-            color: white;
-            text-align: center;
-        }
+<style>
+    /* (省略：bodyやheader-textのCSSはそのまま) */
 
-        /* 1. テキスト表示エリアのスタイル (省略) */
-        .header-text {
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px #000000;
-        }
+    /* 2. 画像ボタンエリアのスタイル */
+    #audio-button {
+        /* ******** ここを修正しました ********** */
+        /* 縦長の画像に合わせて、サイズを縦長に変更 */
+        width: 400px;  /* 例：幅を400pxに */
+        height: 560px; /* 例：高さを560pxに (400 * 1.4 = 560) */
+        /* ************************************** */
+        
+        /* 背景画像を適用 (bg_image.jpg を参照) */
+        background-image: url('bg_image.jpg');
+        
+        /* 画像全体をエリア内に収める */
+        background-size: contain; 
+        background-repeat: no-repeat; 
+        background-position: center; 
+        
+        /* (省略：装飾とFlex設定はそのまま) */
+        border: 5px solid #fff; 
+        border-radius: 10px; 
+        box-shadow: 0 0 30px rgba(255, 255, 255, 0.7); 
+        cursor: pointer; 
+        transition: transform 0.1s ease-in-out; 
 
-        .header-text h1 {
-            font-size: 3.5em; 
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
+        display: flex; 
+        justify-content: center;
+        align-items: center;
+    }
 
-        .header-text p {
-            font-size: 2.5em; 
-            margin: 0.5em 0 0;
-        }
-
-        /* 2. 画像ボタンエリアのスタイル */
-        #audio-button {
-            /* 幅と高さはそのまま */
-            width: 600px;
-            height: 400px;
-            
-            /* 背景画像を適用 (bg_image.jpg を参照) */
-            background-image: url('bg_image.jpg');
-            
-            /* ******** ここを修正しました ********** */
-            background-size: contain; 
-            background-repeat: no-repeat; /* 繰り返し表示を防止 */
-            /* ************************************** */
-            
-            background-position: center; /* 画像を中央に配置 */
-            
-            /* (省略：装飾とFlex設定はそのまま) */
-            border: 5px solid #fff; 
-            border-radius: 10px; 
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.7); 
-            cursor: pointer; 
-            transition: transform 0.1s ease-in-out; 
-
-            display: flex; 
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* (省略：:activeと@mediaのスタイルはそのまま) */
-        @media (max-width: 650px) {
-            #audio-button {
-                width: 90vw; 
-                height: 60vw;
-            }
-            .header-text h1 {
-                font-size: 2em;
-            }
-            .header-text p {
-                font-size: 1.5em;
-            }
-        }
-    </style>
+    /* (省略：:activeと@mediaのスタイルはそのまま) */
+</style>
 </head>
 <body>
     <div class="header-text">
@@ -118,3 +71,4 @@
     </script>
 </body>
 </html>
+
