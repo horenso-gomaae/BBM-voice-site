@@ -12,12 +12,10 @@
         ========================================
         */
         body {
-            /* 1. 背景を黒に設定 */
+            /* 背景色と画面全体の基本設定 */
             background-color: #000; 
-
-            /* 2. ページコンテンツ全体を中央に寄せるための設定 */
             display: flex;
-            flex-direction: column; /* 要素（テキストと画像）を縦に並べる */
+            flex-direction: column; /* 要素を縦に並べる */
             justify-content: center; /* 垂直方向の中央揃え */
             align-items: center;    /* 水平方向の中央揃え */
             
@@ -48,15 +46,17 @@
 
         /* 2. 画像ボタンエリアのスタイル */
         #audio-button {
-            /* 縦長の画像に合わせて、サイズを縦長に再設定 (見切れ防止) */
-            width: 400px;  
-            height: 560px; 
+            /* 縦長画像のアスペクト比を固定し、見切れを防止 */
+            width: 400px;
+            height: auto; 
+            aspect-ratio: 1 / 1.4; /* 縦横比を1:1.4に設定 */
             
             background-image: url('bg_image.jpg');
-            background-size: contain; 
+            background-size: contain; /* 画像全体をエリア内に収める */
             background-repeat: no-repeat; 
             background-position: center; 
             
+            /* 装飾と操作性 */
             border: 5px solid #fff; 
             border-radius: 10px; 
             box-shadow: 0 0 30px rgba(255, 255, 255, 0.7); 
@@ -68,11 +68,17 @@
             align-items: center;
         }
 
-        /* (省略：@mediaのスタイルはそのまま) */
+        /* クリック時にボタンが少し縮むアニメーション */
+        #audio-button:active {
+            transform: scale(0.98); 
+        }
+
+        /* スマホ対応 */
         @media (max-width: 650px) {
             #audio-button {
-                width: 90vw; 
-                height: 60vw;
+                width: 70vw; /* 画面幅の70%を使用 */
+                height: auto;
+                aspect-ratio: 1 / 1.4;
             }
             .header-text h1 {
                 font-size: 2em;
@@ -95,23 +101,14 @@
     <audio id="plug-audio" src="plug.mp3" preload="auto"></audio>
     
     <script>
+        /*
+        ========================================
+        JavaScript (音声再生ロジック)
+        ========================================
+        */
         document.addEventListener('DOMContentLoaded', () => {
             const audioButton = document.getElementById('audio-button');
             const plugAudio = document.getElementById('plug-audio');
 
             audioButton.addEventListener('click', () => {
-                plugAudio.currentTime = 0; 
-
-                plugAudio.play()
-                    .then(() => {
-                        console.log('音声が再生されました。');
-                    })
-                    .catch(error => {
-                        console.error('音声の再生に失敗しました:', error);
-                        alert('再生できませんでした。ブラウザの設定をご確認ください。');
-                    });
-            });
-        });
-    </script>
-</body>
-</html>
+                // 1. 再生前に時間を最初 (0
