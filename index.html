@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Do you love plug</title>
     
     <style>
@@ -56,11 +59,10 @@
             background-repeat: no-repeat; 
             background-position: center; 
             
-            /* ******** 修正点: 枠と影を削除 ********** */
-            border: none;         /* 枠を削除 */
-            border-radius: 10px;  /* 角丸を維持 (見た目には影響しないが、念のため) */
-            box-shadow: none;     /* 影を削除 */
-            /* ************************************** */
+            /* 枠と影を削除 (修正済み) */
+            border: none;         
+            border-radius: 10px;  
+            box-shadow: none;     
             
             cursor: pointer; 
             transition: transform 0.1s ease-in-out; 
@@ -123,8 +125,8 @@
                     })
                     .catch(error => {
                         console.error('音声の再生に失敗しました:', error);
-                        // 再生に失敗した場合、ファイル名やパスに問題がある可能性が高いです
-                        alert('再生できませんでした。音声ファイル(plug.mp3)が正しく配置されているか確認してください。');
+                        // ******** 修正点: エラー時のメッセージを具体的に **********
+                        alert('再生できませんでした。ブラウザの自動再生制限によりブロックされた可能性があります。他のブラウザや設定をお試しください。');
                     });
             });
         });
